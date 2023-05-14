@@ -1,0 +1,139 @@
+<html>
+    <head></head>
+    <style>
+        #root{
+            background-color : tomato;
+            color: white;
+            font-size: 2em;
+            text-align: center;
+            height: 100vh;
+        }
+        #text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 10%;
+        }
+    </style>
+    <body>
+        <!-- konten -->
+        <div id="root">
+            <input type="text" placeholder="username" id="usernameInput" />
+            <input type="password" placeholder="password" id="passwordInput" />
+            <div id="text">
+                <input type="text" placeholder="username" id="usernameReg" />
+            <input type="password" placeholder="password" id="passwordReg" />
+            </div>
+            <div id="button">
+                <button onclick="onLogin()" id="loginButton">LOGIN</button>
+                <button onclick="register()" id="registerButton">REGISTER</button>
+            </div> 
+            <button onclick="onLogout()" id="logoutButton">LOGOUT</button>
+            <button id="loginUlang" href="file:///C:/Users/Lapesy/Desktop/sesi%205/index.html">LOGIN</button>
+            <br/>
+            <h1 id="admin">LOGIN SEBAGAI ADMIN</h1>
+            <h1 id="basic">LOGIN SEBAGAI USER BIASA</h1>
+            <h1 id="gagal">AKUN ANDA TIDAK TERDAFTAR</h1>
+            <h1 id="berhasil">AKUN ANDA BERHASIL TERDAFTARKAN, SILAHKAN LOGIN ULANG</h1>
+            <br/>
+        </div>
+
+        <script type="application/javascript">
+            let usernameInput =document.getElementById('usernameInput');
+            let passwordInput =document.getElementById('passwordInput');
+            let usernameReg =document.getElementById('usernameReg');
+            let passwordReg =document.getElementById('passwordReg');
+            let loginButton = document.getElementById('loginButton')
+            let logoutButton = document.getElementById('logoutButton')
+            let registerButton = document.getElementById('registerButton');
+            let loginUlang = document.getElementById('loginUlang');
+            let admin = document.getElementById('admin');
+            let basic = document.getElementById('basic');
+            let gagal = document.getElementById('gagal');
+            let berhasil = document.getElementById('berhasil');
+
+            
+            logoutButton.style.display = "none";
+            admin.style.display = "none";
+            basic.style.display = "none";
+            gagal.style.display = "none";
+            berhasil.style.display = "none";
+            loginUlang.style.display= "none";
+            usernameReg.style.display = "none"
+            passwordReg.style.display = "none"
+
+            
+
+            function register () {
+                console.log ('tombol register sudah di klik')
+                console.log(usernameReg.value)
+                console.log(passwordReg.value)
+                loginButton.style.display = "none"
+                localStorage.setItem("username", usernameReg.value)
+                usernameInput.style.display = "none"
+                passwordInput.style.display = "none"
+                usernameReg.style.display = "block"
+                passwordReg.style.display = "block"
+
+                if  (usernameReg.value && passwordReg.value){
+                    usernameReg.style.display = "none"
+                    passwordReg.style.display = "none"
+                    berhasil.style.display = "block"
+                    loginUlang.style.display = "block"
+                    localStorage.setItem ("role","akun terdaftar")
+                }
+
+            }
+            
+
+            function onLogin() {
+                console.log('tombol login di klik');
+                console.log(usernameInput.value)
+                console.log(passwordInput.value)
+                localStorage.setItem("username", usernameInput.value);
+                logoutButton.style.display = "block";
+                registerButton.style.display = "none";
+
+                if(usernameInput.value == "Admin" && passwordInput.value == "Admin123"){
+                    usernameInput.style.display = "none"
+                     passwordInput.style.display = "none"
+                     loginButton.style.display = "none"  
+                     logoutButton.style.display = "block";
+                     localStorage.setItem("role", "admin");
+                    admin.style.display = "block";
+                    basic.style.display = "none";
+                } else if (usernameReg.value){
+                    usernameInput.style.display = "none"
+                    passwordInput.style.display = "none"
+                     loginButton.style.display = "none"
+                     logoutButton.style.display = "block";
+                     localStorage.setItem("role", "basic");
+                    basic.style.display = "block";
+                    admin.style.display = "none";
+                } else {
+                    gagal.style.display = "block"
+                }
+            }
+
+           if(localStorage.getItem ('username')){
+            usernameInput.style.display = "none"
+            passwordInput.style.display = "none"
+            loginButton.style.display = "none"
+            if(localStorage.getItem('username') == "Admin"){
+                admin.style.display = "block";
+                basic.style.display = "none";
+            } else if (localStorage.getItem('username', usernameInput.value)) {
+                basic.style.display = "block";
+                    admin.style.display = "none";
+            } else {
+                gagal.style.display = "block"
+            }
+           }
+
+           function onLogout() {
+                localStorage.clear();
+                location.reload();
+           }
+        </script>
+    </body>
+</html>
